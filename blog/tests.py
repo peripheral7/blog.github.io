@@ -10,12 +10,11 @@ class TestView(TestCase):
     # 클래스 안 다른 테스트 함수에 공통적으로 적용.
     def setUp(self):
         self.client = Client()
-        self.user_Trump = User.objects.create_user(
-            username="Trump", password="iamTrump"
-        )
-
         self.user_Biden = User.objects.create_user(
             username="Biden", password="iamBiden"
+        )
+        self.user1 = User.objects.create_user(
+            username="User1", password="iamTrump"
         )
         self.user_Biden.is_staff = True
         self.user_Biden.save()
@@ -30,7 +29,7 @@ class TestView(TestCase):
         
         self.post_001 = Post.objects.create(
             title="First Post",
-            content="Hello world. We are Here.",
+            content="First content it is.",
             author=self.user_Biden,
             category=self.category_study,
         )
@@ -39,7 +38,7 @@ class TestView(TestCase):
         self.post_002 = Post.objects.create(
             title="Second Post",
             content="Hell No world.",
-            author=self.user_Trump,
+            author=self.user1,
             category=self.category_daily,
         )
         self.post_002.tags.add(self.tag_photo)
@@ -47,6 +46,7 @@ class TestView(TestCase):
 
     def navbar_test(self, soup):
         navbar = soup.nav
+        self.assertIn("Home", navbar.text)
         self.assertIn("Blog", navbar.text)
         self.assertIn("About", navbar.text)
 
@@ -108,29 +108,20 @@ class TestView(TestCase):
     def test_post_list(self):
         self.assertEqual(Post.objects.count(), 2)
 
-        # 1.1 포스트 목록 페이지
-        # 이때 열리는 웹 페이지 정보를 response에 저장
+        # 1. 포스트 목록 페이지 가져와 response 저장, 페이지 정상 로드 확인, soup. 명령어.
         response = self.client.get("/blog/")
-        # 1.2 페이지 로드
-        # response 에 저장된 status_code 200(정상적으로 열림)
         self.assertEqual(response.status_code, 200)
-        # 1.3. 페이지 타이틀 Blog
-        # HTML요소 쉽게 접근하게 읽어들임. parse 명령어
         soup = BeautifulSoup(response.content, "html.parser")
-
         self.navbar_test(soup)
         self.category_card_test(soup)
 
-        # 2.2 아직 게시물이 없습니다
-        main_area = soup.find("div", id="main-area")
-        self.assertNotIn("No content yet.", main_area.text)
-
-        # 3.2 포스트 목록 새로고침 시
+        # 포스트 목록 새로고침 시
         # response = self.client.get("/blog/")
         # soup = BeautifulSoup(response.content, "html.parser")
         # self.assertEqual(response.status_code, 200)
 
-        # 3.3 메인영역 포스트 2개 타이틀 존재
+        # 게시물 확인.
+        main_area = soup.find("div", id="main-area")
         post_001_card = main_area.find("div", id="post-1")
         self.assertIn(self.post_001.title, post_001_card.text)
         self.assertIn(self.post_001.category.name, post_001_card.text)
@@ -142,12 +133,12 @@ class TestView(TestCase):
         post_002_card = main_area.find("div", id="post-2")
         self.assertIn(self.post_002.title, post_002_card.text)
         self.assertIn(self.post_002.category.name, post_002_card.text)
-        self.assertIn(self.user_Trump.username, main_area.text)
+        self.assertIn(self.user1.username, main_area.text)
         self.assertIn(self.tag_photo.name, post_002_card.text)
         self.assertIn(self.tag_diary.name, post_002_card.text)
         self.assertNotIn(self.tag_programming.name, post_002_card.text)
 
-        # if no post
+        # If there's no Post
         Post.objects.all().delete()
         self.assertEqual(Post.objects.count(), 0)
         response = self.client.get("/blog/")
@@ -156,25 +147,14 @@ class TestView(TestCase):
         self.assertIn("No content yet.", main_area.text)
 
     def test_post_detail(self):
-        # 1.1 포스트 하나
-        # new database
-
-        # url은 '/blog/1/'
         self.assertEqual(self.post_001.get_absolute_url(), "/blog/1/")
 
         # 2. 첫 번째 포스트의 상세 페이지 테스트
-        # 2.1 첫 번째 포스트의 url로 접근하면 정상작동
         response = self.client.get(self.post_001.get_absolute_url())
         self.assertEqual(response.status_code, 200)
         soup = BeautifulSoup(response.content, "html.parser")
 
-        # 2.2 포스트 목록 페이지와 같은 네비게이션 바
-        # 별도로 분리
-
-        # 2.3 첫 번째 포스트의 제목이 웹 브라우저 탭 타이틀에
         self.assertIn(self.post_001.title, soup.title.text)
-
-        # 2.4 첫 번째 포스트의 제목이 포스트 영역에
         main_area = soup.find("div", id="main-area")
         post_area = main_area.find("article", id="post-area")
         self.assertIn(self.post_001.title, post_area.text)
@@ -192,7 +172,7 @@ class TestView(TestCase):
         response = self.client.get('/blog/create_post/')
         self.assertNotEqual(response.status_code, 200)
 
-        self.client.login(username="Trump", password="iamTrump")
+        self.client.login(username="User1", password="iamTrump")
         response = self.client.get('/blog/create_post/')
         self.assertNotEqual(response.status_code, 200)
 
@@ -214,7 +194,7 @@ class TestView(TestCase):
             {
                 'title': 'Practice Post',
                 'content': "Create Post Form Page",
-                'tags_str': 'new tag; 한글 태그, python'
+                'tags_str': 'programming, 한글 태그, python'
             }
         )
         self.assertEqual(Post.objects.count(), 3)
@@ -224,7 +204,7 @@ class TestView(TestCase):
         self.assertEqual(last_post.content, "Create Post Form Page")
 
         self.assertEqual(last_post.tags.count(), 3)
-        self.assertTrue(Tag.objects.get(name='new tag'))
+        self.assertTrue(Tag.objects.get(name='programming'))
         self.assertTrue(Tag.objects.get(name='한글 태그'))
         self.assertTrue(Tag.objects.get(name='python'))
 
@@ -236,9 +216,9 @@ class TestView(TestCase):
         self.assertNotEqual(response.status_code, 200)
 
         # logged in but not the writer
-        self.assertNotEqual(self.post_001.author, self.user_Trump)
+        self.assertNotEqual(self.post_001.author, self.user1)
         self.client.login(
-            username=self.user_Trump.username,
+            username=self.user1.username,
             password="iamTrump"
         )
         response=self.client.get(update_post_url)
@@ -268,7 +248,7 @@ class TestView(TestCase):
                 'title': 'Edited',
                 'content': 'Hello world',
                 'category': self.category_study.pk,
-                'tags_str': '파이썬 공부; 한글 태그, some tag'
+                'tags_str': 'programming; 한글태그'
             },
             follow=True
         )
@@ -278,7 +258,6 @@ class TestView(TestCase):
         self.assertIn('Hello world', main_area.text)
         self.assertIn(self.category_study.name, main_area.text)
         
-        self.assertIn('파이썬 공부', main_area.text)
-        self.assertIn('한글 태그', main_area.text)
-        self.assertIn('some tag', main_area.text)
+        self.assertIn('programming', main_area.text)
+        self.assertIn('한글태그', main_area.text)
         self.assertNotIn('python', main_area.text)

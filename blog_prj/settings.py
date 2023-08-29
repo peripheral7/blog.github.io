@@ -126,9 +126,8 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join("staticfiles")
 
-# 미디어 파일을 사용할 경로
+# 미디어 파일을 사용할 경로와 이미지 파일 저장할 위치
 MEDIA_URL = '/media/'
-# 이미지 파일을 저장할 위치
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

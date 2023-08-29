@@ -8,8 +8,7 @@ admin.site.register(Post, MarkdownxModelAdmin)
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    # name 필드 입력시 slug 자동생성
-    prepopulated_fields = {"slug": ("name",)}
+    prepopulated_fields = {"slug": ("name", )}
 
 class TagAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', )}
