@@ -41,7 +41,6 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
-        # 장고 모델에서 pk자동 생성 - 각 레코드 고유값
         return f"[{self.pk}] {self.title} :: {self.author}"
 
     # url 생성 규칙

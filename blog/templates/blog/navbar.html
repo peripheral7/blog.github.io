@@ -1,4 +1,6 @@
-<html lang="en">
+{% load socialaccount %}
+
+<html lang="ko">
     {% load static %}
     <head>
 
@@ -10,8 +12,10 @@
     </head>
 
     <body>
+
         <!-- Responsive navbar-->
         <nav class="py-3 navbar navbar-expand-lg navbar-dark bg-dark">
+
             <div class="container">
                 <a class="navbar-brand" href="/">Here's to Better Us</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -25,16 +29,30 @@
                         <li class="nav-item mx-4"><a class="nav-link" aria-current="page" href="/blog/">Blog</a>
                         </li>
                     </ul>
+
+                    <!-- sign in -->
+                    {% if user.is_authenticated %}
+                    <div class="navbar-nav ms-auto">
+                        <div class="nav-item dropdown-center">
+                            <a href="#" class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-offset="-30,0">
+                                {{user.username}}
+                            </a>
+                            <ul class="dropdown-menu" >
+                                <li><a href="/accounts/logout/" class="dropdown-item">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% else %}
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#SignInModal">Sign
-                                In</a>
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#SignInModal">Sign In</a>
                         </li>
                     </ul>
-
+                    {% endif %}
                 </div>
             </div>
         </nav>
+
         <!-- Modal -->
         <div class="modal fade" id="SignInModal" tabindex="-1" aria-labelledby="SignInModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -47,16 +65,16 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <button type="button" class="btn btn-outline-dark col-12 my-2 btn-sm"><i
-                                        class="fa-brands fa-google"></i>&nbsp&nbsp Log in with Google</button>
+                                <a role="button"class="btn btn-outline-dark col-12 my-2 btn-sm" href="{% provider_login_url 'google' %}"><i
+                                        class="fa-brands fa-google"></i>&nbsp&nbsp Log in with Google</a>
                             </div>
                             <div class="col-md-6">
-                                <button type="button" class="btn btn-outline-dark col-12 my-2 btn-sm"><i
-                                        class="fa-regular fa-envelope"></i>&nbsp&nbsp Log in with Facebook</button>
+                                <a role="button" class="btn btn-outline-dark col-12 my-2 btn-sm" href="/accounts/login/" ><i
+                                        class="fa-regular fa-envelope"></i>&nbsp&nbsp Log in with Email</a>
                             </div>
                             <div class="col-md-6">
-                                <button type="button" class="btn btn-outline-dark col-12 my-2 btn-sm"><i
-                                        class="fa-brands fa-facebook"></i>&nbsp&nbsp Log in with Email</button>
+                                <a role="button" class="btn btn-outline-dark col-12 my-2 btn-sm" href="/accounts/signup/"><i
+                                        class="far fa-envelope"></i>&nbsp&nbsp Register with Email</a>
                             </div>
                         </div>
                     </div>
@@ -66,9 +84,7 @@
                 </div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
-        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"crossorigin="anonymous"></script>
     </body>
 
 </html>

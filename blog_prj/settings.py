@@ -37,10 +37,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'django_extensions',
+    "django.contrib.sites",
 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     'crispy_forms',
     "crispy_bootstrap5",
@@ -119,11 +121,14 @@ USE_TZ = False
 
 
 STATIC_URL = "/static/"
+
+# DEBUG = True
 # 프로젝트 아래에 static 폴더가 있을 경우!
 #STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+# DEBUG = False
 STATIC_ROOT = os.path.join("staticfiles")
 
 # 미디어 파일을 사용할 경로와 이미지 파일 저장할 위치
@@ -137,3 +142,14 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1 # 추가
+ACCOUNT_EMAIL_REQUIRED = True   # 회원가입시 이메일 필요 여부, 추가
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # 이메일 검증 여부, 추가
+SOCIALACCOUNT_LOGIN_ON_GET = True
+LOGIN_REDIRECT_URL = '/blog/'  # 로그인 후 리다이렉트될 경로
