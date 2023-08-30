@@ -106,6 +106,7 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin,   CreateView):
         else: 
             return redirect('/blog/')
 
+
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
     fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']

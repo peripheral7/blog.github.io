@@ -7,13 +7,10 @@
 {% endblock %}
 
 {% block main_area %}
-<!-- Post content-->
-<article class="my-4" id="post-area">
+<article class="my-4 px-4 post-content" id="post-area">
     <!-- Post header-->
     <header class="">
-        <!-- Post title-->
         <h1 class="fw-bolder mb-4">
-        <!-- categories -->
         {% if post.category %}
         <a class="text-decoration-none text-dark" href="{{ post.category.get_absolute_url}}">
         <span >{{ post.category }}</span></a>
