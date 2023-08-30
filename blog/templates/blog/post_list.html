@@ -2,75 +2,71 @@
 {% extends 'blog/base.html' %}
 
 {% block main_area %}
-    <div class="px-4">
-        <h1 class="fw-bolder mb-4">블로그
-            {%if category %}
-                / {{ category }}
-            {% else %}
 
-            {%endif%}
+{% comment %} <i class="fa-solid fa-angle-right"> {% endcomment %}
+<h1>Contents
+    {%if category %} {{ category }} {%endif%}
+    {% if tag %}
+        <span id="tag-badge" class="badge bg-light"><a class="text-decoration-none text-dark" href="{{tag.get_absolute_url}}">#{{ tag }} ({{tag.post_set.count}})</a></span>
+    {% endif %}
 
-            {% if tag %}
-                <span id="tag-badge" class=""><a class="text-decoration-none text-dark" href="{{tag.get_absolute_url}}">#{{ tag }}</a></span>
-            {% endif %}
-
-            {% if user.is_authenticated %}
-                {% if user.is_superuser or user.is_staff %}
-                    <a class="btn btn-primary btn-sm float-end mt-4" href="/blog/create_post/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Post</a><hr>
-                {% endif %}
-            {% endif %}
-        </h1>
-
-        <!-- Featured blog post-->
-        {% if post_list.exists %}
-            {% for p in post_list %}
-            <div class="card mb-4" id="post-{{ p.pk }}">
-                <a href="{{p.get_absolute_url}}">
-                    {% if p.head_image %}
-                    <img class="card-img-top list-image" src="{{ p.head_image.url }}" alt="{{p}} head image"/>
-                    {% else %}
-                    <img class="card-img-top" src="https://picsum.photos/seed/{{p.id}}/800/300" alt="random image">
-                    {% endif %}
-                </a>
-
-                <div class="card-body post-content">
-                    {% if p.category %}
-                        <a class="text-decoration-none" href="{{ p.category.get_absolute_url}}">
-                            <span class="badge bg-secondary float-end">{{ p.category }}</span>
-                        </a>
-                    {% else %}
-                        <a href="/blog/category/no_category"><span class="badge bg-secondary float-end">미분류</span></a>
-                    {% endif %}
-
-                    <a class="text-decoration-none" href="{{p.get_absolute_url}}">
-                        <h3 class="card-title text-dark">{{ p.title }}</h3>
-                    </a>
-
-                    {% if p.hook_text %}
-                        <h6 class="text-muted post-content">{{ p.hook_text }}</h6>
-                    {% endif %}
-
-                    <p class="card-text post-content">{{ p.get_content_markdown | truncatewords_html:45 | safe }}</p>
-            <!--        <a class="btn btn-primary " href="{{p.get_absolute_url}}">Read more</a>-->
-                </div>
-                <div class="card-footer post-content text-muted d-flex justify-content-between">
-                    <div>
-                        {% if p.tags.exists %}
-                            {% for tag in p.tags.iterator %}
-                                <a class="text-decoration-none" href="{{tag.get_absolute_url}}">
-                                    <span class="badge text-bg-light">#{{tag}}</span>
-                                </a>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    <div>
-                        {{ p.created_at }} by <a href="#">{{p.author}}</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        {% else %}
-            <h3>No content yet.</h3>
+    {% if user.is_authenticated %}
+        {% if user.is_superuser or user.is_staff %}
+            <a class="btn btn-primary btn-sm float-end mt-4" href="/blog/create_post/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Post</a><hr>
         {% endif %}
+    {% endif %}
+</h1>
+
+
+<!-- Featured blog post-->
+{% if post_list.exists %}
+{% comment %} 
+ListView 를 상속받은 클래스는 기본적으로 get_context_data 매서드 내장
+단지 model = Post 선언하면 위 메소드가 post_list = Post.objects.all()명령 {% endcomment %}
+{% for p in post_list %}
+<div class="card mb-4" id="post-{{ p.pk }}">
+
+    <a href="{{p.get_absolute_url}}">
+        {% if p.head_image %}
+        <img class="card-img-top list-image" src="{{ p.head_image.url }}" alt="{{p}} head image"/>
+        {% else %}
+        <img class="card-img-top" src="https://picsum.photos/seed/{{p.id}}/800/300" alt="random image">
+        {% endif %}
+    </a>
+
+    <div class="card-body post-content">
+
+        {% comment %} category {% endcomment %}
+        {% if p.category %}
+        <a class="text-decoration-none" href="{{ p.category.get_absolute_url}}">
+            <span class="badge bg-secondary float-end">{{ p.category }}</span>
+        </a>
+        {% else %}
+        <a href="/blog/category/no_category"><span class="badge bg-secondary float-end">미분류</span></a>
+        {% endif %}
+
+        <a class="text-decoration-none" href="{{p.get_absolute_url}}">
+            <h3 class="card-title text-dark">{{ p.title }}</h3>
+        </a>
+
+        {% comment %} hook text {% endcomment %}
+        {% if p.hook_text %}
+        <h6 class="text-muted post-content">{{ p.hook_text }}</h6>
+        {% endif %}
+        <p class="card-text post-content">{{ p.get_content_markdown | truncatewords_html:45 | safe }}</p>
+<!--        <a class="btn btn-primary " href="{{p.get_absolute_url}}">Read more</a>-->
+
+
     </div>
+    <div class="card-footer text-muted">
+        {{ p.created_at }}
+        by <a href="#">{{p.author}}</a>
+    </div>
+</div>
+
+{% endfor %}
+{% else %}
+<h3>No content yet.</h3>
+{% endif %}
+
 {% endblock %}

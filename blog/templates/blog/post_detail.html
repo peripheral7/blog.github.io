@@ -3,17 +3,19 @@
 <!--Bring head_title block from file that extends base.html-->
 <!-- if not, use title from base.html -->
 {% block head_title %}
-    {{ post.title }}
+{{ post.title }} - Blog
 {% endblock %}
 
 {% block main_area %}
-<!-- Post content-->
+<<<<<<< HEAD
 <article class="my-4 px-4 post-content" id="post-area">
+=======
+<!-- Post content-->
+<article class="my-4" id="post-area">
     <!-- Post header-->
+>>>>>>> parent of 030936c (unitl post edit)
     <header class="">
-        <!-- Post title-->
         <h1 class="fw-bolder mb-4">
-        <!-- categories -->
         {% if post.category %}
         <a class="text-decoration-none text-dark" href="{{ post.category.get_absolute_url}}">
         <span >{{ post.category }}</span></a>
@@ -23,16 +25,20 @@
            / {{ post.title}}
         </h1>
 
+
         <!-- Post meta content-->
-        <div class="mt-2 text-muted d-flex justify-content-between">
-            <div>{{ post.created_at}}&nbsp;</div>
+        <div class="mt-2 text-muted d-flex justify-content-end">
+
             <div>
-                by&nbsp;<a href="#" >{{post.author}}</a>
+                by&nbsp;<a href="#" >{{post.author}}</a>, {{ post.created_at}}&nbsp;
+
+                <!-- edit post -->
                 {% if user.is_authenticated and user == post.author %}
-                    <a class="btn  btn-sm mx-1 " href="/blog/update_post/{{post.pk}}/" role="button">
-                        <i class="fas fa-pen"></i> Edit
-                    </a>
-                 {% endif %}
+                <a class="btn btn-success btn-sm" href="/blog/update_post/{{post.pk}}/" role="button">
+                    <i class="fas fa-pen"></i> Edit
+                </a>
+                {% endif %}
+
             </div>
         </div>
     </header>
