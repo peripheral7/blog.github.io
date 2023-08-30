@@ -29,5 +29,4 @@ urlpatterns = [
     path('', include('single_pages.urls')),
 ]
 
-# static foler, settings.py file
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

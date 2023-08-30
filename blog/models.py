@@ -30,7 +30,7 @@ class Tag(models.Model):
 
 # Create your models here.
 class Post(models.Model):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=40)
     hook_text = models.CharField(max_length=100, blank=True)
     content = MarkdownxField()
 
@@ -40,8 +40,6 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-
-    # Null 은 삭제시, blank는 입력시 빈칸 대비
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
 
     # 태그 삭제시 포스트 태그는 자동 blank
@@ -49,7 +47,7 @@ class Post(models.Model):
     
 
     def __str__(self):
-        return f"[{self.pk}] {self.title} :: {self.author}"
+        return f"[{self.pk}] {self.title} / {self.author}"
 
     # url 생성 규칙
     def get_absolute_url(self):
@@ -73,9 +71,14 @@ class About_post(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, null=True, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.author}::{self.content}'
+        return f'{self.author} / {self.content}'
+
+    def get_absolute_url(self):
+        return f'{self.post.get_absolute_url()}#comment-{self.pk}'

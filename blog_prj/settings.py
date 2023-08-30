@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.kakao',
 
     'crispy_forms',
     "crispy_bootstrap5",
@@ -149,8 +151,26 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-SITE_ID = 1 # 추가
+SITE_ID = 1
 ACCOUNT_EMAIL_REQUIRED = True   # 회원가입시 이메일 필요 여부, 추가
-ACCOUNT_EMAIL_VERIFICATION = 'none'  # 이메일 검증 여부, 추가
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # 이메일 검증 여부
 SOCIALACCOUNT_LOGIN_ON_GET = True
+#권장하지 않음. POST 로 보내줘야.
+
+
 LOGIN_REDIRECT_URL = '/blog/'  # 로그인 후 리다이렉트될 경로
+ACCOUNT_LOGOUT_REDIRECT_URL = '/blog/'
+ACCOUNT_LOGOUT_ON_GET = True
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+
