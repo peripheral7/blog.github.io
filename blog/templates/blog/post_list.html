@@ -1,6 +1,5 @@
 <!-- 모듈화 -->
 {% extends 'blog/base.html' %}
-
 {% block main_area %}
 
 <h1>
@@ -55,10 +54,9 @@
             <h6 class="text-muted post-content">{{ p.hook_text }}</h6>
             {% endif %}
             <p class="card-text post-content">{{ p.get_content_markdown | truncatewords_html:45 | safe }}</p>
-    <!--        <a class="btn btn-primary " href="{{p.get_absolute_url}}">Read more</a>-->
-
-
+            <!--        <a class="btn btn-primary " href="{{p.get_absolute_url}}">Read more</a>-->
         </div>
+
         <div class="card-footer text-muted d-flex justify-content-between">
             <div>
                 {{ p.created_at }}

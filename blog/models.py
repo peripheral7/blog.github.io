@@ -5,7 +5,6 @@ from markdownx.models import MarkdownxField
 from markdownx.utils import markdown
 import os
 
-
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     # slug : 고유 url

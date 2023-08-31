@@ -1,5 +1,7 @@
 {% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
 
+{% load static %}
 <!--Bring head_title block from file that extends base.html-->
 <!-- if not, use title from base.html -->
 {% block head_title %}
@@ -20,14 +22,12 @@
             {{ post.title}}
         </h1>
 
-
-        <!-- Post meta content-->
         <div class="my-4 text-muted d-flex justify-content-end">
             <div class="post-detail-meta">
                 by&nbsp;<a href="#" >{{post.author}}</a>, {{ post.created_at}}&nbsp;
 
                 {% if user.is_authenticated and user == post.author %}
-                <a class="btn btn-sm" href="/blog/update_post/{{post.pk}}/" role="button">
+                <a class="btn btn-sm " href="/blog/update_post/{{post.pk}}/" role="button">
                     <i class="fas fa-pen"></i> Edit
                 </a>
                 {% endif %}
@@ -83,23 +83,66 @@
 <!-- Comments section-->
 <section class="my-7" id="comment-area">
     <div class="card bg-light">
+        <h5 class="card-header">Comments</h5>
         <div class="card-body">
-            <!-- Comment form-->
-            <form class="mb-4"><textarea class="form-control" rows="3"
-                    placeholder="Join the discussion and leave a comment!"></textarea></form>
+
+            {% if user.is_authenticated %}
+            <form method="POST" action="{{post.get_absolute_url}}new_comment/">
+                {% csrf_token %}
+                    {{ comment_form | crispy }}
+                <button type="submit" class="btn btn-primary ">Submit</button>
+            </form>
+
+            {% else %}
+            <div class="d-grid gap-2">
+                <a href="#" role="button" class="btn btn-outline-dark btn-block"
+                   data-bs-toggle="modal"
+                   data-bs-target="#SignInModal">Log in to leave a comment</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card bg-light mt-2">
+        <div class="card-body">
             {% if post.comment_set.exists %}
                 {% for comment in post.comment_set.iterator %}
-                    <div class="d-flex mb-4" id="comment-{{ comment.pk }}">
-                        <!-- Parent comment-->
-                        <div class="flex-shrink-0"><img class="rounded-circle"
-                                src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                        <div class="ms-3">
-                            <div class="fw-bold">
-                                {{ comment.author.username }}
-                                &nbsp;&nbsp;<small class="text-muted">{{comment.created_at}}</small></div>
-                            <p class="comment-p">{{ comment.content | linebreaks }}</p>
+                    <div class="d-flex " id="comment-{{ comment.pk }}">
+                        <div class="flex-shrink-0 "><img class="rounded-circle comment-profile-picture"
+                                src="{% static 'blog/images/Gustav-klimt.jpg' %}" alt="..." />
                         </div>
+                        <div class="ms-3 w-100">
+                            <div class="d-flex justify-content-between w-100" >
+                                <div class="fw-bold">
+                                    {{ comment.author.username }}
+                                    &nbsp;&nbsp;<small class="text-muted">{{comment.created_at}}</small>
+
+                                </div>
+
+                                {% if user.is_authenticated and comment.author == user %}
+                                    <a role="button"
+                                       class="btn btn-sm float-right"
+                                       id="comment-{{ comment.pk}}-update-btn"
+                                       href="/blog/update_comment/{{comment.pk}}/">
+                                        edit
+                                    </a>
+                                {% endif %}
+                            </div>
+
+                            <p class="comment-p">{{ comment.content | linebreaks }}</p>
+
+
+                            {% if comment.created_at != comment.modified_at %}
+                            <div class="d-flex justify-content-end">
+                                <p class="text-muted float-right">
+                                    <small>Updated: {{ comment.updated_at }}</small>
+                                </p>
+                            </div>
+                            {% endif %}
+                            
+                        </div>
+
                     </div>
+
                 {% endfor %}
             {% endif %}
         </div>
