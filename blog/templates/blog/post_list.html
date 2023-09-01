@@ -61,8 +61,8 @@
 
         <div class="card-footer text-muted d-flex justify-content-between">
             <div>
-                {{ p.created_at }}
-            by <a href="#">{{p.author}}</a>
+                {{ p.created_at | date }}
+             <a href="#"> {{p.author}}</a>
             </div>
             <div >
                 {% if p.tags.exists %}

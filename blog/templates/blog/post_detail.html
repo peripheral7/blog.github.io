@@ -24,10 +24,10 @@
         <div class="text-muted post-detail-meta row">
             <div class="col-9 d-flex flex-column ">
                 <div class="">
-                    <p class="my-0">{{ post.created_at}} by&nbsp;<a href="#" class="text-decoration-none ">{{post.author}}</a></p>
+                    <p class="my-0">{{ post.created_at | date:"SHORT_DATE_FORMAT" }} by&nbsp;<a href="#" class="text-decoration-none ">{{post.author}}</a></p>
 
                 {% if post.created_at != post.updated_at %}
-                    <p class="">{{ post.updated_at }} (Updated)</p>
+                    <p class="">{{ post.updated_at | date:"SHORT_DATE_FORMAT"}} (Updated)</p>
                 {% endif %}
                 </div>
 

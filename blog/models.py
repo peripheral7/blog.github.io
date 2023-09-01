@@ -62,6 +62,11 @@ class Post(models.Model):
     def get_content_markdown(self):
         return markdown(self.content)
 
+    def get_avatar_url(self):
+        if self.author.socialaccount_set.exists():
+            return self.author.socialaccount_set.first().get_avatar_url()
+        else:
+            return  static_url+'blog/images/Gustav-klimt.jpg'
 
 class About_post(models.Model):
     title = models.CharField(max_length=30)

@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Post, Category, Tag, Comment
+
 from .forms import CommentForm
 from django.shortcuts import render, redirect
 # sign in

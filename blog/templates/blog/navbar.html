@@ -1,4 +1,5 @@
 {% load socialaccount %}
+{% load avatar_tags %}
 
 <html lang="ko">
     {% load static %}
@@ -12,7 +13,7 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark  p-0" style="height:5rem">
+        <nav class="navbar navbar-expand-lg navbar-dark border-bottom border-white p-0" style="height:5rem">
             <div class="container p-0">
                 <a class="align-item-start navbar-brand" href="/">Here's to Better Us</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -30,31 +31,45 @@
                             <!-- sign in -->
 
                             {% if user.is_authenticated %}
-                                <li class="nav-item col-3 dropdown-center my-auto ">
+                                <li class="nav-item col-1">
 
-                                    <a href="#" class=" dropdown-toggle navbar-username"  role="button" data-bs-toggle="dropdown" aria-expanded="false"  data-bs-offset="0,0">
+                                </li>
+                                <li class="nav-item col-2 dropdown-center my-auto ">
+                                    <a href="#" class=" dropdown-toggle navbar-username"  role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="-10,0">
 
                                     {% if user.socialaccount_set.all.0.get_avatar_url %}
                                         <img class="rounded-circle comment-profile-picture" width="20px"
                                     src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="user" />
                                     {% else %}
-                                        <img class="rounded-circle comment-profile-picture" width="20px"
-                                    src="{% static 'blog/images/Gustav-klimt.jpg' %}" alt="user" />
-
+<!--                                <img class="rounded-circle comment-profile-picture" width="20px"-->
+<!--                                    src="{% avatar user %}" alt="user" />-->
+                                    {% avatar user 20 20 class="rounded-circle comment-profile-picture" id="user_avatar" %}
+                                    <!-- {% static 'blog/images/Gustav-klimt.jpg' %} -->
                                     {% endif %}
 
                                     {{user.username}}
                                     </a>
+
                                     <ul class="dropdown-menu" >
                                         <li><a href="/accounts/logout/" class="dropdown-item">Log Out</a></li>
+                                        {% if user.socialaccount_set.all.0.get_avatar_url %}
+                                        {% else %}
+                                        <li>
+                                            <a href="{% url 'avatar_change' %}"  class="dropdown-item">Avatar</a>
+                                        </li>
+                                        {% endif %}
                                     </ul>
+
                                 </li>
+
                             {% else %}
-                            <ul class="navbar-nav ms-auto">
-                                <li class="nav-item">
+                                <li class="nav-item col-1">
+
+                                </li>
+                                <li class="nav-item col-2">
                                     <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#SignInModal">Log In</a>
                                 </li>
-                            </ul>
+
                             {% endif %}
                             </li>
                         </ul>

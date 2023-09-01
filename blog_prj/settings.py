@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'django_extensions',
     "django.contrib.sites",
+    'avatar', 
 
     'allauth',
     'allauth.account',
@@ -112,14 +113,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ko-KR"
 
 TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 
 # changed
-USE_TZ = False
+USE_TZ = True
 
 
 STATIC_URL = "/static/"
