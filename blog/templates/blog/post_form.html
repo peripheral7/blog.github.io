@@ -10,13 +10,22 @@
     <h1>Create New Post</h1>
     <hr/>
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
-        {{form | crispy }}
-        <div id="div_id_tags_str">
-            <label for="id_tags_str" class="mb-2">Tags: </label>
-            <input type="text" name="tags_str" id="id_tags_str" class="textinput textInput form-control">
+        <!-- {{ form | crispy }} -->
+        <div class="">{{ form.title | as_crispy_field}}</div>
+        <div class="">{{ form.content | as_crispy_field}}</div>
+        <div class="row">
+            <div class="col-6">{{ form.category | as_crispy_field}}</div>
+            <div class="col-6" id="div_id_tags_str">
+                <label for="id_tags_str" class="mb-2">Tags: </label>
+                <input type="text" name="tags_str" id="id_tags_str" class="textinput textInput form-control">
+            </div>
         </div>
-
-        <button type="submit" class="btn btn-primary float-right my-4">Submit</button>
+        <div class="row">
+            <div class="col-6">{{ form.head_image | as_crispy_field}}</div>
+            <div class="col-6">{{ form.file_upload | as_crispy_field}}</div>
+        </div>
+        <button type="submit" class="btn btn-primary float-end my-4">Submit</button>
+        {{ form.media }}
     </form>
 {% endblock %}
 

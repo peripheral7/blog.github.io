@@ -1,24 +1,28 @@
-<!-- 모듈화 -->
 {% extends 'blog/base.html' %}
+
 {% block main_area %}
 
 <h1>
-    {%if category %}
-        {{ category }}
-    {%else%}
-        Contents
-    {%endif%}
+    {% if search_info %}
+        <small class="">
+            {{ search_info}}
+        </small>
+    {% else %}
+        {%if category %}
+            {{ category }}
+        {%else%}
+            Contents
+        {%endif%}
+    {% endif %}
 
     {% if tag %}
         <span id="tag-badge" class="badge bg-light"><a class="text-decoration-none text-dark" href="{{tag.get_absolute_url}}">#{{ tag }} ({{tag.post_set.count}})</a></span>
     {% endif %}
 
     {% if user.is_authenticated %}
-<!--        {% if user.is_superuser or user.is_staff %}-->
-            <a class="btn btn-primary btn-sm float-end mt-4" href="/blog/create_post/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Post</a>
-<!--        {% endif %}-->
+        <a class="btn btn-primary btn-sm float-end mt-4" href="/blog/create_post/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Post</a>
     {% endif %}
-    <hr>
+    <hr/>
 </h1>
 
 
@@ -36,8 +40,6 @@
         </a>
 
         <div class="card-body post-content">
-
-            {% comment %} category {% endcomment %}
             {% if p.category %}
             <a class="text-decoration-none" href="{{ p.category.get_absolute_url}}">
                 <span class="badge bg-secondary float-end">{{ p.category }}</span>
@@ -78,6 +80,34 @@
     {% endfor %}
 {% else %}
     <h3>No content yet.</h3>
+{% endif %}
+
+<!-- Pagination-->
+{% if is_paginated %}
+<nav aria-label="Pagination">
+    <ul class="pagination justify-content-center my-4">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number}}"> &larr; </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a href="#" class="page-link"> &larr; </a>
+            </li>
+        {% endif %}
+
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number}}"> &rarr; </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true"> &rarr; </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
 {% endif %}
 
 {% endblock %}

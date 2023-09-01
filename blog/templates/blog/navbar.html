@@ -12,43 +12,55 @@
     </head>
 
     <body>
-
-        <!-- Responsive navbar-->
-        <nav class="py-3 navbar navbar-expand-lg navbar-dark bg-dark">
-
-            <div class="container">
-                <a class="navbar-brand" href="/">Here's to Better Us</a>
+        <nav class="navbar navbar-expand-lg navbar-dark  p-0" style="height:5rem">
+            <div class="container p-0">
+                <a class="align-item-start navbar-brand" href="/">Here's to Better Us</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation"><span
-                        class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item mx-4"><a class="nav-link" href="/">Home</a></li>
-                        <li class="nav-item mx-4"><a class="nav-link" href="/about/">About</a></li>
-                        <li class="nav-item mx-4"><a class="nav-link" aria-current="page" href="/blog/">Blog</a>
-                        </li>
-                    </ul>
+                        class="navbar-toggler-icon"></span>
+                </button>
 
-                    <!-- sign in -->
-                    {% if user.is_authenticated %}
-                    <div class="navbar-nav ms-auto">
-                        <div class="nav-item dropdown-center">
-                            <a href="#" class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-offset="-30,0">
-                                {{user.username}}
-                            </a>
-                            <ul class="dropdown-menu" >
-                                <li><a href="/accounts/logout/" class="dropdown-item">Log Out</a></li>
+                <div class="collapse navbar-collapse container text-center px-0" id="navbarSupportedContent">
+                    <div class="row w-100 px-0 py-0">
+                        <ul class="navbar-nav my-auto">
+                            <li class="nav-item col-3 py-auto"><a class="nav-link nav-components" href="/">Home</a></li>
+                            <li class="nav-item col-3"><a class="nav-link" href="/about/">About</a></li>
+                            <li class="nav-item col-3"><a class="nav-link" aria-current="page" href="/blog/">Blog</a>
+                            <!-- sign in -->
+
+                            {% if user.is_authenticated %}
+                                <li class="nav-item col-3 dropdown-center my-auto ">
+
+                                    <a href="#" class=" dropdown-toggle navbar-username"  role="button" data-bs-toggle="dropdown" aria-expanded="false"  data-bs-offset="0,0">
+
+                                    {% if user.socialaccount_set.all.0.get_avatar_url %}
+                                        <img class="rounded-circle comment-profile-picture" width="20px"
+                                    src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="user" />
+                                    {% else %}
+                                        <img class="rounded-circle comment-profile-picture" width="20px"
+                                    src="{% static 'blog/images/Gustav-klimt.jpg' %}" alt="user" />
+
+                                    {% endif %}
+
+                                    {{user.username}}
+                                    </a>
+                                    <ul class="dropdown-menu" >
+                                        <li><a href="/accounts/logout/" class="dropdown-item">Log Out</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#SignInModal">Log In</a>
+                                </li>
                             </ul>
-                        </div>
+                            {% endif %}
+                            </li>
+                        </ul>
                     </div>
-                    {% else %}
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#SignInModal">Log In</a>
-                        </li>
-                    </ul>
-                    {% endif %}
+
+
                 </div>
             </div>
         </nav>

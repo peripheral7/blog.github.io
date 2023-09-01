@@ -10,7 +10,6 @@
 
 {% block main_area %}
 <article class="my-4 px-4 post-content" id="post-area">
-    <!-- Post header-->
     <header class="">
         <h1 class="fw-bolder mb-4">
         {% if post.category %}
@@ -22,17 +21,27 @@
             {{ post.title}}
         </h1>
 
-        <div class="my-4 text-muted d-flex justify-content-end">
-            <div class="post-detail-meta">
-                by&nbsp;<a href="#" >{{post.author}}</a>, {{ post.created_at}}&nbsp;
+        <div class="text-muted post-detail-meta row">
+            <div class="col-9 d-flex flex-column ">
+                <div class="">
+                    <p class="my-0">{{ post.created_at}} by&nbsp;<a href="#" class="text-decoration-none ">{{post.author}}</a></p>
 
+                {% if post.created_at != post.updated_at %}
+                    <p class="">{{ post.updated_at }} (Updated)</p>
+                {% endif %}
+                </div>
+
+
+            </div>
+            <div class="col-3 my-auto">
                 {% if user.is_authenticated and user == post.author %}
-                <a class="btn btn-sm " href="/blog/update_post/{{post.pk}}/" role="button">
-                    <i class="fas fa-pen"></i> Edit
-                </a>
+                    <a class="btn btn-sm float-end" href="/blog/update_post/{{post.pk}}/" role="button">
+                        <i class="fas fa-pen"></i> Edit
+                    </a>
                 {% endif %}
             </div>
         </div>
+
     </header>
 
     <!-- Preview image figure-->
@@ -102,51 +111,56 @@
             {% endif %}
         </div>
     </div>
-    <div class="card bg-light mt-2">
-        <div class="card-body">
-            {% if post.comment_set.exists %}
-                {% for comment in post.comment_set.iterator %}
+    {% if post.comment_set.exists %}
+        {% for comment in post.comment_set.iterator %}
+            <div class="card bg-light mt-2 my-5">
+                <div class="card-body">
                     <div class="d-flex " id="comment-{{ comment.pk }}">
                         <div class="flex-shrink-0 "><img class="rounded-circle comment-profile-picture"
-                                src="{% static 'blog/images/Gustav-klimt.jpg' %}" alt="..." />
+                                src="{{ comment.get_avatar_url }}" alt="comment.author" />
                         </div>
                         <div class="ms-3 w-100">
                             <div class="d-flex justify-content-between w-100" >
                                 <div class="fw-bold">
                                     {{ comment.author.username }}
                                     &nbsp;&nbsp;<small class="text-muted">{{comment.created_at}}</small>
+                                </div>
+
+                                <div>
+                                    {% if user.is_authenticated and comment.author == user %}
+                                        <a role="button"
+                                           class="btn btn-sm float-end delete-button"
+                                           id="comment-{{ comment.pk}}-delete-btn"
+                                           href="/blog/delete_comment/{{ comment.pk }}">
+                                            delete
+                                        </a>
+
+                                        <a role="button"
+                                           class="btn btn-sm float-end edit-button"
+                                           id="comment-{{ comment.pk}}-update-btn"
+                                           href="/blog/update_comment/{{comment.pk}}/">
+                                            edit
+                                        </a>
+
+                                    {% endif %}
 
                                 </div>
 
-                                {% if user.is_authenticated and comment.author == user %}
-                                    <a role="button"
-                                       class="btn btn-sm float-right"
-                                       id="comment-{{ comment.pk}}-update-btn"
-                                       href="/blog/update_comment/{{comment.pk}}/">
-                                        edit
-                                    </a>
-                                {% endif %}
                             </div>
 
                             <p class="comment-p">{{ comment.content | linebreaks }}</p>
 
-
-                            {% if comment.created_at != comment.modified_at %}
-                            <div class="d-flex justify-content-end">
-                                <p class="text-muted float-right">
+                            {% if comment.created_at != comment.updated_at %}
+                                <p class="text-muted float-end">
                                     <small>Updated: {{ comment.updated_at }}</small>
                                 </p>
-                            </div>
                             {% endif %}
-                            
                         </div>
-
                     </div>
-
-                {% endfor %}
-            {% endif %}
-        </div>
-    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
 </section>
 {% endblock %}
 

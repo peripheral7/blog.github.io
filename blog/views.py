@@ -1,5 +1,6 @@
 # from django.shortcuts import render
 from urllib import response
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Post, Category, Tag, Comment
@@ -15,15 +16,16 @@ from django.utils.text import slugify
 # ListView 상속한 PostList 클래스 선언
 class PostList(ListView):
     model = Post
-    # 파일명 post_list 로 수정하면 자동 반영 - 관용적으로 이름짓기
-    # 또는 template_name = 'blog/index.html'
+    # 파일명 post_list 또는 template_name = 'blog/index.html'
     ordering = '-pk'
-
+    paginate_by = 5
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data()
         context['categories'] = Category.objects.all()
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
-        return context 
+        return context
+
+
 
 def category_page(request, slug):
     if slug == 'no_category':
@@ -71,21 +73,14 @@ class PostDetail(DetailView):
         context['comment_form'] = CommentForm
         return context
 
-class PostCreate(LoginRequiredMixin, UserPassesTestMixin,   CreateView):
+class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']
-    
-    def test_func(self):
-        return self.request.user.is_superuser or self.request.user.is_staff
+    fields = ['title', 'content', 'head_image', 'file_upload', 'category']
 
-    # author 필드를 로그인한 사용자로 채워줌
-    # form_valid 함수 내장 , 유효한 정보로 포스트 생성, 고유경로로 보내줌(redirect)
     def form_valid(self, form):
         # visitor
         current_user = self.request.user
-        # if signed in:
-        if current_user.is_authenticated and (current_user.is_staff or current_user.is_superuser):
-            # author of the form is current_user
+        if current_user.is_authenticated:
             form.instance.author = current_user
             response = super(PostCreate, self).form_valid(form)
 
@@ -95,7 +90,7 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin,   CreateView):
                 tags_str = tags_str.replace(',', ';')
                 tags_list = tags_str.split(';')
 
-                for t in tags_list: 
+                for t in tags_list:
                     t = t.strip()
                     if t != '':
                         tag, is_tag_created = Tag.objects.get_or_create(name=t)
@@ -103,16 +98,16 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin,   CreateView):
                             tag.slug = slugify(t, allow_unicode=True)
                             tag.save()
                         self.object.tags.add(tag)
-                
+
             # send form as argument of form_valid()
             return response
-        else: 
+        else:
             return redirect('/blog/')
 
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']
+    fields = ['title', 'content', 'head_image', 'file_upload', 'category']
     template_name = 'blog/post_update_form.html'
 
     def get_context_data(self, **kwargs):
@@ -181,6 +176,35 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
         else:
             raise PermissionDenied
 
+
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    post = comment.post
+    if request.user.is_authenticated and request.user == comment.author:
+        comment.delete()
+        return redirect(post.get_absolute_url())
+    else:
+        raise PermissionDenied
+
+
+class PostSearch(PostList):
+    paginate_by = None
+
+    # PostList는 ListView 상속, ListView 의 쿼리셋 오버라이딩
+    def get_queryset(self):
+        q = self.kwargs['q']
+        post_list = Post.objects.filter(
+            # 여러 쿼리 사용시 장고 Q 이용. 밑줄 두 개! distinct는 중복 시 한 번.
+            Q(title__contains=q) | Q(tags__name__contains=q)
+        ).distinct()
+        return post_list
+
+    def get_context_data(self, **kwargs):
+        context = super(PostSearch, self).get_context_data()
+        q = self.kwargs['q']
+        context['search_info'] = f'Search: {q} ({self.get_queryset().count()})'
+
+        return context
 
 """Function Based View
 def index(request):

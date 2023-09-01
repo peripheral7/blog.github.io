@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 from markdownx.utils import markdownify
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdown
@@ -15,7 +16,6 @@ class Category(models.Model):
     def get_absolute_url(self):
         return f'/blog/category/{self.slug}/'
     class Meta:
-        # 아니면 category + s로 만듦.
         verbose_name_plural = "Categories"
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -62,13 +62,14 @@ class Post(models.Model):
     def get_content_markdown(self):
         return markdown(self.content)
 
+
 class About_post(models.Model):
     title = models.CharField(max_length=30)
     content = MarkdownxField()
     head_image = models.ImageField(upload_to="blog/images/%Y/%m/%d/", blank=True)
     file_upload = models.FileField(upload_to="blog/files/%Y/%m/%d/", blank=True)
 
-
+static_url = settings.STATIC_URL
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -81,3 +82,9 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return f'{self.post.get_absolute_url()}#comment-{self.pk}'
+
+    def get_avatar_url(self):
+        if self.author.socialaccount_set.exists():
+            return self.author.socialaccount_set.first().get_avatar_url()
+        else:
+            return  static_url+'blog/images/Gustav-klimt.jpg'
