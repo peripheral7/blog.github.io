@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap');
 
 body{
@@ -24,23 +23,28 @@ a:hover{
 }
 
 .navbar-brand{
-    width: 30%;
+
 }
+
+.nav-container{
+    width: 100%;
+
+}
+
 .post-content, .card, .korean{
     font-family: 'Noto Serif KR', serif;
     line-height: normal;
 }
 
 .navbar{
-    height: 80px;
     border-bottom: 1px solid white;
     box-sizing: content-box;
 }
 
 .nav-link{
-    line-height: 77px;
-    padding: 0;
-    height: 80px;
+
+    height: 100%;
+    padding: 1.5rem 0;
 }
 
 .nav-link:hover{
@@ -61,7 +65,7 @@ a:hover{
 
 .landing-header {
     color: #313131;
-    padding: 50vh 0 50vh;
+    padding: 30vh 0 60vh;
     background: url('/static/blog/images/paper_sky.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;

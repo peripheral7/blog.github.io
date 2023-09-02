@@ -134,19 +134,16 @@ USE_TZ = True
 
 
 STATIC_URL = "/static/"
-
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # DEBUG = True
 # 프로젝트 아래에 static 폴더가 있을 경우!
 #STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
-# DEBUG = False
-STATIC_ROOT = os.path.join("staticfiles")
 
-# 미디어 파일을 사용할 경로
+
 MEDIA_URL = '/media/'
-# 이미지 파일을 저장할 위치
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

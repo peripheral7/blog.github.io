@@ -193,6 +193,14 @@ def delete_comment(request, pk):
     else:
         raise PermissionDenied
 
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.user.is_authenticated and request.user == post.author:
+        post.delete()
+        return redirect('/blog/')
+    else:
+        raise PermissionDenied
+
 
 class PostSearch(PostList):
     paginate_by = None
