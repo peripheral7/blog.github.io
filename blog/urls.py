@@ -1,5 +1,4 @@
 from django.urls import path
-
 # 폴더 있는 views.py 가져오기
 from . import views
 
@@ -16,7 +15,8 @@ urlpatterns = [
     # 파일명은 post_list.html
     path('', views.PostList.as_view()),
     # 파일명을 post_detail.html 로 바꿔주거나 template_name = "blog/file_name.html"
-    path('<int:pk>/', views.PostDetail.as_view())
+    path('<int:pk>/', views.PostDetail.as_view()),
+
 
     # path('/<int:pk>/', views.single_post_page),
     # path('/', views.index), # FBV

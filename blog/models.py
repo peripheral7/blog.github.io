@@ -6,6 +6,7 @@ from markdownx.models import MarkdownxField
 from markdownx.utils import markdown
 import os
 
+
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     # slug : 고유 url
@@ -17,6 +18,8 @@ class Category(models.Model):
         return f'/blog/category/{self.slug}/'
     class Meta:
         verbose_name_plural = "Categories"
+
+
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
     # slug : 고유 url
@@ -26,6 +29,7 @@ class Tag(models.Model):
         return self.name
     def get_absolute_url(self):
         return f'/blog/tag/{self.slug}/'
+
 
 # Create your models here.
 class Post(models.Model):
@@ -63,10 +67,10 @@ class Post(models.Model):
         return markdown(self.content)
 
     def get_avatar_url(self):
-        if self.author.socialaccount_set.exists():
-            return self.author.socialaccount_set.first().get_avatar_url()
-        else:
-            return  static_url+'blog/images/Gustav-klimt.jpg'
+    #     if self.author.socialaccount_set.exists():
+    #         return self.author.socialaccount_set.first().get_avatar_url()
+    #     else:
+        return  static_url+'blog/images/Gustav-klimt.jpg'
 
 class About_post(models.Model):
     title = models.CharField(max_length=30)
@@ -89,7 +93,4 @@ class Comment(models.Model):
         return f'{self.post.get_absolute_url()}#comment-{self.pk}'
 
     def get_avatar_url(self):
-        if self.author.socialaccount_set.exists():
-            return self.author.socialaccount_set.first().get_avatar_url()
-        else:
-            return  static_url+'blog/images/Gustav-klimt.jpg'
+        return  static_url+'blog/images/Gustav-klimt.jpg'

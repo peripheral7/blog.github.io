@@ -24,7 +24,9 @@ nav, footer, .color-background {
 }
 
 .navbar{
-    height: 4rem;
+    height: 80px;
+    border-bottom: 1px solid white;
+    box-sizing: content-box;
 }
 
 .nav-link{

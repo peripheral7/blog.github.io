@@ -1,4 +1,4 @@
-{% load socialaccount %}
+
 {% load avatar_tags %}
 
 <html lang="ko">
@@ -51,6 +51,7 @@
                                     </a>
 
                                     <ul class="dropdown-menu" >
+
                                         <li><a href="/accounts/logout/" class="dropdown-item">Log Out</a></li>
                                         {% if user.socialaccount_set.all.0.get_avatar_url %}
                                         {% else %}
@@ -92,17 +93,10 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <a role="button" class="btn btn-outline-dark col-12 my-2 btn-sm" href="{% provider_login_url 'google' %}"><i
-                                        class="fa-brands fa-google"></i>&nbsp&nbsp Log in with Google</a>
+                                <a role="button" class="btn btn-outline-dark col-12 my-2 btn-sm" href="{% url "social:begin" "google-oauth2" %}"><i
+                                        class="fa-brands fa-google"></i>&nbsp&nbsp Google</a>
                             </div>
-                            <div class="col-md-6">
-                                <a role="button" class="btn btn-outline-dark col-12 my-2 btn-sm" href="/accounts/login/" ><i
-                                        class="fa-regular fa-envelope"></i>&nbsp&nbsp Log in with Email</a>
-                            </div>
-                            <div class="col-md-6">
-                                <a role="button" class="btn btn-outline-dark col-12 my-2 btn-sm" href="/accounts/signup/"><i
-                                        class="far fa-envelope"></i>&nbsp&nbsp Register with Email</a>
-                            </div>
+
                         </div>
                     </div>
                     <div class="modal-footer">

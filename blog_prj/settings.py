@@ -43,16 +43,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'django_extensions',
-    "django.contrib.sites",
-    'avatar', 
-
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.naver',
-    'allauth.socialaccount.providers.kakao',
-
+    'avatar',
+    'social_django',
     'crispy_forms',
     "crispy_bootstrap5",
     "markdownx",
@@ -69,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = "blog_prj.urls"
@@ -84,6 +77,9 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -97,8 +93,12 @@ WSGI_APPLICATION = "blog_prj.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": os.environ.get("SQL_ENGINE",  "django.db.backends.sqlite3"),
+        "NAME": os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get('SQL_USER', 'user'),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", 'password'),
+        "HOST": os.environ.get("SQL_HOST", 'localhost'),
+        "PORT": os.environ.get("SQL_PORT", '5432'),
     }
 }
 
@@ -115,6 +115,10 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend', # Django 기본 유저모델
+    'social_core.backends.google.GoogleOAuth2',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -153,31 +157,12 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "348055127156-vulur0tsr94dh05do7bq95mac38b9jme.apps.googleusercontent.com"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
 
-SITE_ID = 1
-ACCOUNT_EMAIL_REQUIRED = True   # 회원가입시 이메일 필요 여부, 추가
-ACCOUNT_EMAIL_VERIFICATION = 'none'  # 이메일 검증 여부
-SOCIALACCOUNT_LOGIN_ON_GET = True
-#권장하지 않음. POST 로 보내줘야.
-
-
-LOGIN_REDIRECT_URL = '/blog/'  # 로그인 후 리다이렉트될 경로
-ACCOUNT_LOGOUT_REDIRECT_URL = '/blog/'
-ACCOUNT_LOGOUT_ON_GET = True
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
-
+# PostgreSQL use JSONB field to store extra_data
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL='/blog/'
+LOGOUT_REDIRECT_URL = "/blog/"
 

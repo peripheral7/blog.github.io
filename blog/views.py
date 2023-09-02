@@ -12,7 +12,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
 
-# Create your views here.
+from django.contrib.auth import logout
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from django.contrib import auth
 
 # ListView 상속한 PostList 클래스 선언
 class PostList(ListView):
@@ -26,7 +29,9 @@ class PostList(ListView):
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
         return context
 
-
+#
+# def social_login(request):
+#     return render(request, 'social_login.html')
 
 def category_page(request, slug):
     if slug == 'no_category':
@@ -62,6 +67,7 @@ def tag_page(request, slug):
             'no_category_post_count': Post.objects.filter(category=None).count(),
         }
     )
+
 
 # 개별 페이지
 class PostDetail(DetailView):
@@ -206,6 +212,9 @@ class PostSearch(PostList):
         context['search_info'] = f'Search: {q} ({self.get_queryset().count()})'
 
         return context
+
+
+
 
 """Function Based View
 def index(request):
