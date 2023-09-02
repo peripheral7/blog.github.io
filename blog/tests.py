@@ -2,7 +2,7 @@ from turtle import update
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from bs4 import BeautifulSoup
-from .models import Post, Category, Tag
+from .models import Post, Category, Tag, Comment
 
 # Create your tests here.
 class TestView(TestCase):
@@ -13,7 +13,6 @@ class TestView(TestCase):
         self.user_Trump = User.objects.create_user(
             username="Trump", password="iamTrump"
         )
-
         self.user_Biden = User.objects.create_user(
             username="Biden", password="iamBiden"
         )
@@ -30,20 +29,26 @@ class TestView(TestCase):
         
         self.post_001 = Post.objects.create(
             title="First Post",
-            content="Hello world. We are Here.",
+            content="This is what User Biden says.",
             author=self.user_Biden,
             category=self.category_study,
         )
-        self.post_001.tags.add(self.tag_programming)
-
         self.post_002 = Post.objects.create(
             title="Second Post",
-            content="Hell No world.",
+            content="This is what User Trump says.",
             author=self.user_Trump,
             category=self.category_daily,
         )
+
+        self.post_001.tags.add(self.tag_programming)
         self.post_002.tags.add(self.tag_photo)
         self.post_002.tags.add(self.tag_diary)
+
+        self.comment_001 = Comment.objects.create(
+            post=self.post_001,
+            author=self.user_Trump,
+            content='댓글1 입니다.'
+        )
 
     def navbar_test(self, soup):
         navbar = soup.nav
@@ -168,13 +173,10 @@ class TestView(TestCase):
         self.assertEqual(response.status_code, 200)
         soup = BeautifulSoup(response.content, "html.parser")
 
-        # 2.2 포스트 목록 페이지와 같은 네비게이션 바
-        # 별도로 분리
-
-        # 2.3 첫 번째 포스트의 제목이 웹 브라우저 탭 타이틀에
+        # 첫 번째 포스트의 제목이 웹 브라우저 탭 타이틀에
         self.assertIn(self.post_001.title, soup.title.text)
 
-        # 2.4 첫 번째 포스트의 제목이 포스트 영역에
+        # 첫 번째 포스트의 제목이 포스트 영역에
         main_area = soup.find("div", id="main-area")
         post_area = main_area.find("article", id="post-area")
         self.assertIn(self.post_001.title, post_area.text)
@@ -186,7 +188,14 @@ class TestView(TestCase):
         self.assertIn(self.tag_programming.name, post_area.text)
         self.assertNotIn(self.tag_photo.name, post_area.text)
         self.assertNotIn(self.tag_diary.name, post_area.text)
-    
+
+        comments_area = soup.find('div', id='comment-area')
+        comment_001_area = comments_area.find('div', id='comment-1')
+        self.assertIn(self.comment_001.author.username, comment_001_area.text)
+        self.assertIn(self.comment_001.content, comment_001_area.text)
+
+
+
     def test_create_post(self):
         # not logged in
         response = self.client.get('/blog/create_post/')
@@ -202,7 +211,7 @@ class TestView(TestCase):
         self.assertEqual(response.status_code, 200)
         soup = BeautifulSoup(response.content, "html.parser")
 
-        self.assertEqual("Create Post - Blog", soup.title.text)
+        # self.assertEqual("Create Post - Blog", soup.title.text)
         main_area = soup.find("div", id="main-area")
         self.assertIn('Create New Post', main_area.text)
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 from markdownx.utils import markdownify
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdown
@@ -16,8 +17,9 @@ class Category(models.Model):
     def get_absolute_url(self):
         return f'/blog/category/{self.slug}/'
     class Meta:
-        # 아니면 category + s로 만듦.
         verbose_name_plural = "Categories"
+
+
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
     # slug : 고유 url
@@ -28,9 +30,10 @@ class Tag(models.Model):
     def get_absolute_url(self):
         return f'/blog/tag/{self.slug}/'
 
+
 # Create your models here.
 class Post(models.Model):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=40)
     hook_text = models.CharField(max_length=100, blank=True)
     content = MarkdownxField()
 
@@ -40,8 +43,6 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-
-    # Null 은 삭제시, blank는 입력시 빈칸 대비
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
 
     # 태그 삭제시 포스트 태그는 자동 blank
@@ -49,7 +50,7 @@ class Post(models.Model):
     
 
     def __str__(self):
-        return f"[{self.pk}] {self.title} :: {self.author}"
+        return f"[{self.pk}] {self.title} / {self.author}"
 
     # url 생성 규칙
     def get_absolute_url(self):
@@ -65,17 +66,31 @@ class Post(models.Model):
     def get_content_markdown(self):
         return markdown(self.content)
 
+    def get_avatar_url(self):
+    #     if self.author.socialaccount_set.exists():
+    #         return self.author.socialaccount_set.first().get_avatar_url()
+    #     else:
+        return  static_url+'blog/images/Gustav-klimt.jpg'
+
 class About_post(models.Model):
     title = models.CharField(max_length=30)
     content = MarkdownxField()
     head_image = models.ImageField(upload_to="blog/images/%Y/%m/%d/", blank=True)
     file_upload = models.FileField(upload_to="blog/files/%Y/%m/%d/", blank=True)
 
-
+static_url = settings.STATIC_URL
 class Comment(models.Model):
-    post = models.ForeignKey(Post, null=True, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.author}::{self.content}'
+        return f'{self.author} / {self.content}'
+
+    def get_absolute_url(self):
+        return f'{self.post.get_absolute_url()}#comment-{self.pk}'
+
+    def get_avatar_url(self):
+        return  static_url+'blog/images/Gustav-klimt.jpg'

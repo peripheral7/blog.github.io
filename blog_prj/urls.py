@@ -16,18 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-# image
 from django.conf import settings
 from django.conf.urls.static import static
 
-urlpatterns = [
+from django.contrib.auth.views import LogoutView
 
+urlpatterns = [
+    path('avatar/', include('avatar.urls')),
     path('blog/', include('blog.urls')),
     path("admin/", admin.site.urls),
     path('markdownx/', include('markdownx.urls')),
-    path('accounts/', include('allauth.urls')),
     path('', include('single_pages.urls')),
+    path('oauth/', include('social_django.urls', namespace='social')),
+    path('accounts/logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
 ]
 
-# static foler, settings.py file
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

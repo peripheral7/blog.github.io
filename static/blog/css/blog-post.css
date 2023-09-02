@@ -3,18 +3,110 @@
 
 body{
     font-family: 'Playfair Display', serif;
-    margin-top: 72px;
+    color: #313131;
 }
 
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 3;
+ .base-main {
+    min-height: 90vh;
 }
 
-.post-content{
+a{
+    color: #313131;
+}
+
+a:hover{
+    color: #919191;
+}
+
+.navbar, footer, .color-background {
+    background-color: #2B4162;
+    color: #E4DFDA;
+}
+
+.navbar-brand{
+    width: 30%;
+}
+.post-content, .card, .korean{
     font-family: 'Noto Serif KR', serif;
+    line-height: normal;
+}
+
+.navbar{
+    height: 80px;
+    border-bottom: 1px solid white;
+    box-sizing: content-box;
+}
+
+.nav-link{
+    line-height: 77px;
+    padding: 0;
+    height: 80px;
+}
+
+.nav-link:hover{
+    background-color: #BEA379;
+    color: #2B4162;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.navbar-username{
+    text-decoration: none;
+    color: #b3afab;
+}
+
+.navbar-username:hover{
+    color: #E4DFDA;
+}
+
+.landing-header {
+    color: #313131;
+    padding: 50vh 0 50vh;
+    background: url('/static/blog/images/paper_sky.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover
+    -o-background-size: cover;
+}
+
+.landing-h1-black{
+    transition: all 0.5s ease;
+}
+
+.landing-h1-black:hover{
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+    text-shadow: 0 0 3px #F5F0F6, 0 0 6px #F5F0F6;
+}
+
+.landing-h1-white{
+    color: white;
+    margin: 0 0;
+    padding: 20vh 0;
+}
+
+.landing-video {
+    padding: 30vh 0 30vh;
+    background-color: black;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover
+    -o-background-size: cover;
+}
+
+.landing-bottom{
+    padding: 35vh 0;
+    background-image: url('../images/385F71.png');
+    background-size: cover;
+}
+.landing-bottom-background{
+    object-fit: cover;
+}
+
+#list-image-div{
+    width: 100%;
+    height: 300px;
 }
 
 .list-image{
@@ -24,24 +116,47 @@ body{
 }
 
 .detail-image{
-  width: 50%;
-  height: 50%;
+  width: 70%;
+  height: 70%;
   object-fit: cover;
 }
 
-h1 {
-    margin-top: 5rem;
-    font-size: 2.5rem;
+.post-detail-meta {
+    font-size: 14px;
 }
 
 .about {
-    width: 32%;
     height: 100%;
     object-fit: cover;
 }
-.about-background{
-    height: 110%;
-}
-.background-black {
 
+.about-background{
+    padding: 0 0;
+    height:105vh;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+
+
+#post-detail-section{
+    min-height: 37vh;
+}
+
+.comment-profile-picture{
+    width: 50px;
+    height: 50px;
+}
+
+.delete-button:hover{
+    background-color: #A22C29;
+    color: white;
+}
+
+.edit-button:hover{
+    background-color: #3C5233;
+    color: white;
+}
+
+.comment-field{
+height: 50px;
 }
