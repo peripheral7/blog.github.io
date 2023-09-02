@@ -3,14 +3,22 @@
 
 body{
     font-family: 'Playfair Display', serif;
-    color:  #515751;
+    color: #313131;
+}
+
+ .base-main {
+    min-height: 90vh;
 }
 
 a{
-    color: #515751;
+    color: #313131;
 }
 
-nav, footer, .color-background {
+a:hover{
+    color: #919191;
+}
+
+.navbar, footer, .color-background {
     background-color: #2B4162;
     color: #E4DFDA;
 }
@@ -42,7 +50,6 @@ nav, footer, .color-background {
     border-left: 1px solid white;
 }
 
-
 .navbar-username{
     text-decoration: none;
     color: #b3afab;
@@ -53,7 +60,7 @@ nav, footer, .color-background {
 }
 
 .landing-header {
-    color: black;
+    color: #313131;
     padding: 50vh 0 50vh;
     background: url('/static/blog/images/paper_sky.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
@@ -71,7 +78,6 @@ nav, footer, .color-background {
     -moz-animation: glow 1s ease-in-out infinite alternate;
     animation: glow 1s ease-in-out infinite alternate;
     text-shadow: 0 0 3px #F5F0F6, 0 0 6px #F5F0F6;
-
 }
 
 .landing-h1-white{
@@ -91,7 +97,16 @@ nav, footer, .color-background {
 
 .landing-bottom{
     padding: 35vh 0;
-    background-color: #385F71;
+    background-image: url('../images/385F71.png');
+    background-size: cover;
+}
+.landing-bottom-background{
+    object-fit: cover;
+}
+
+#list-image-div{
+    width: 100%;
+    height: 300px;
 }
 
 .list-image{
@@ -117,12 +132,14 @@ nav, footer, .color-background {
 
 .about-background{
     padding: 0 0;
-    height:110vh;
+    height:105vh;
     border-left: 1px solid white;
     border-right: 1px solid white;
 }
 
-.background-black {
+
+#post-detail-section{
+    min-height: 37vh;
 }
 
 .comment-profile-picture{
@@ -134,10 +151,12 @@ nav, footer, .color-background {
     background-color: #A22C29;
     color: white;
 }
+
 .edit-button:hover{
     background-color: #3C5233;
     color: white;
 }
+
 .comment-field{
 height: 50px;
 }

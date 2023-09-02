@@ -11,14 +11,14 @@
 {% block main_area %}
 <article class="my-4 px-4 post-content" id="post-area">
     <header class="">
-        <h1 class="fw-bolder mb-4">
+        <h1 class=" mb-4">
         {% if post.category %}
-        <a class="text-decoration-none text-dark" href="{{ post.category.get_absolute_url}}">
-        <span >{{ post.category }} / </span></a>
+        <a class="text-decoration-none" href="{{ post.category.get_absolute_url}}">
+        <span >{{ post.category }}</span></a> /
         {% else %}
-        <a href="/blog/category/no_category text-dark"><span ></span></a>
+        <a href="/blog/category/no_category" class="text-decoration-none"><span > 미분류</span></a> /
         {% endif %}
-            {{ post.title}}
+            <span class="fw-bolder">{{ post.title}}</span>
         </h1>
 
         <div class="text-muted post-detail-meta row">
@@ -33,7 +33,7 @@
 
 
             </div>
-            <div class="col-3 my-auto">
+            <div class="col-3 ">
                 {% if user.is_authenticated and user == post.author %}
                     <a class="btn btn-sm float-end" href="/blog/update_post/{{post.pk}}/" role="button">
                         <i class="fas fa-pen"></i> Edit
@@ -41,52 +41,50 @@
                 {% endif %}
             </div>
         </div>
-
+        <hr>
     </header>
 
-    <!-- Preview image figure-->
-    <figure class="my-5 d-flex justify-content-center">
-        {% if post.head_image %}
-        <img class="card-img-top detail-image" src="{{ post.head_image.url }}" alt="{{post}} head image" />
-        {% endif %}
-    </figure>
 
-    <!-- Post content-->
-    <section class="my-4">
-        <!-- safe prevents HTML escaping-->
-        <!-- rendering HTML used tags into HTML entity -->
-        <p class="post-content fs-5 mb-4">{{post.get_content_markdown | safe }}</p>
 
-        <!-- <h2 class="fw-bolder mb-4 mt-5">I have odd cosmic thoughts every day</h2> -->
-    </section>
 
-    <section class="my-3 d-flex justify-content-end">
-        {% if post.file_upload %}
-        <a class="btn btn-outline-dark" href="{{ post.file_upload.url }}" role="button" download>
-            {% if post.get_file_ext == 'csv' %}
-            <i class="fas fa-file-csv"></i>
-            {% elif post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls'%}
-                <i class="fas fa-file-excel"></i>
-            {% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc'%}
-                <i class="fas fa-file-word"></i>
-            {% else %}
-            <i class="far fa-file"></i>
+    <section class="my-4" id="post-detail-section">
+
+        <figure class="my-5 d-flex justify-content-center">
+            {% if post.head_image %}
+            <img class="card-img-top detail-image" src="{{ post.head_image.url }}" alt="{{post}} head image" />
             {% endif %}
-            {{post.get_file_name}}
-        </a>
-        {% endif %}
-    </section>
+        </figure>
 
-    <div class="d-flex justify-content-end">
-        {% if post.tags.exists %}
-            {% for tag in post.tags.iterator %}
-            <a class="text-decoration-none" href="{{tag.get_absolute_url}}">
-                <span class="badge text-bg-light">#{{tag}}</span>
+        <p class="post-content fs-5 mb-4">{{post.get_content_markdown | safe }}</p>
+        <div class="my-3 d-flex justify-content-end">
+            {% if post.file_upload %}
+            <a class="btn btn-outline-dark" href="{{ post.file_upload.url }}" role="button" download>
+                {% if post.get_file_ext == 'csv' %}
+                <i class="fas fa-file-csv"></i>
+                {% elif post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls'%}
+                    <i class="fas fa-file-excel"></i>
+                {% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc'%}
+                    <i class="fas fa-file-word"></i>
+                {% else %}
+                <i class="far fa-file"></i>
+                {% endif %}
+                {{post.get_file_name}}
             </a>
-          {% endfor %}
-        {% endif %}
-    </div>
+            {% endif %}
+        </div>
 
+        <div class="d-flex justify-content-end">
+            {% if post.tags.exists %}
+                {% for tag in post.tags.iterator %}
+                <a class="text-decoration-none" href="{{tag.get_absolute_url}}">
+                    <span class="badge text-bg-light">#{{tag}}</span>
+                </a>
+              {% endfor %}
+            {% endif %}
+        </div>
+
+    </section>
+    <hr>
 </article>
 
 <!-- Comments section-->
