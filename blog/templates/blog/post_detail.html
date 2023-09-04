@@ -48,13 +48,10 @@
     </header>
 
 
-
-
     <section class="my-4" id="post-detail-section">
-
         <figure class="my-5 d-flex justify-content-center">
             {% if post.head_image %}
-            <img class="card-img-top detail-image" src="{{ post.head_image.url }}" alt="{{post}} head image" />
+            <img class="card-img-top detail-image" src="{{ post.head_image.url }}" alt="{{post.title}} head image" />
             {% endif %}
         </figure>
 

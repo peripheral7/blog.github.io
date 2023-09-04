@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap');
 
-body{
+nav, footer, .english{
     font-family: 'Playfair Display', serif;
     color: #313131;
 }
@@ -34,6 +34,7 @@ a:hover{
 .post-content, .card, .korean{
     font-family: 'Noto Serif KR', serif;
     line-height: normal;
+    color: #313131;
 }
 
 .navbar{
@@ -64,7 +65,7 @@ a:hover{
 }
 
 .landing-header {
-    color: #313131;
+    color: #272727;
     padding: 30vh 0 60vh;
     background: url('/static/blog/images/paper_sky.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
