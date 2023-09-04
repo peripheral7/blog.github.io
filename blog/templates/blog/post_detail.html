@@ -35,8 +35,11 @@
             </div>
             <div class="col-3 ">
                 {% if user.is_authenticated and user == post.author %}
-                    <a class="btn btn-sm float-end" href="/blog/update_post/{{post.pk}}/" role="button">
-                        <i class="fas fa-pen"></i> Edit
+                    <a class="btn btn-sm float-end edit-button mx-1" href="/blog/update_post/{{post.pk}}/" role="button">
+                        <i class=""></i> Edit
+                    </a>
+                    <a class="btn btn-sm float-end delete-button" href="/blog/delete_post/{{post.pk}}/" role="button">
+                        <i class=" "></i> Delete
                     </a>
                 {% endif %}
             </div>
@@ -45,13 +48,10 @@
     </header>
 
 
-
-
     <section class="my-4" id="post-detail-section">
-
         <figure class="my-5 d-flex justify-content-center">
             {% if post.head_image %}
-            <img class="card-img-top detail-image" src="{{ post.head_image.url }}" alt="{{post}} head image" />
+            <img class="card-img-top detail-image" src="{{ post.head_image.url }}" alt="{{post.title}} head image" />
             {% endif %}
         </figure>
 

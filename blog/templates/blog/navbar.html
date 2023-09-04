@@ -13,33 +13,29 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark border-bottom border-white p-0" style="height:5rem">
-            <div class="container p-0">
-                <a class="align-item-start navbar-brand" href="/">Here's to Better Us</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        <nav class="py-3 py-lg-0 navbar navbar-expand-lg navbar-dark border-bottom border-white">
+            <div class="container nav-container">
+                <a class="navbar-brand ms-3 ms-lg-0 me-5" href="/">Here's to Better Us</a>
+                <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation"><span
-                        class="navbar-toggler-icon"></span>
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse container text-center px-0" id="navbarSupportedContent">
-                    <div class="row w-100 px-0 py-0">
-                        <ul class="navbar-nav my-auto">
-                            <li class="nav-item col-3 py-auto"><a class="nav-link nav-components" href="/">Home</a></li>
-                            <li class="nav-item col-3"><a class="nav-link" href="/about/">About</a></li>
-                            <li class="nav-item col-3"><a class="nav-link" aria-current="page" href="/blog/">Blog</a>
-                            <!-- sign in -->
+                <div class="collapse navbar-collapse text-center px-0 py-0" id="navbarSupportedContent">
+                        <ul class="navbar-nav my-auto px-0 container">
+                            <li class="nav-item col-lg-3 col-12 mt-3 mt-lg-0 "><a class="nav-link nav-components px-0" href="/">Home</a></li>
+                            <li class="nav-item col-lg-3 col-12"><a class="nav-link nav-components px-0" href="/about/">About</a></li>
+                            <li class="nav-item col-lg-3 col-12 "><a class="nav-link nav-components px-0" aria-current="page" href="/blog/">Blog</a>
 
                             {% if user.is_authenticated %}
-                                <li class="nav-item col-1">
-
+                                <li class="nav-item col-lg-0 col-0">
                                 </li>
-                                <li class="nav-item col-2 dropdown-center my-auto ">
+                                <li class="nav-item col-lg-3 col-12 dropdown-center my-2 my-lg-auto">
                                     <a href="#" class=" dropdown-toggle navbar-username"  role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="-10,0">
 
                                     {% if user.socialaccount_set.all.0.get_avatar_url %}
-                                        <img class="rounded-circle comment-profile-picture" width="20px"
-                                    src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="user" />
+                                        <img class="rounded-circle comment-profile-picture" width="20px" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="user" />
                                     {% else %}
 <!--                                <img class="rounded-circle comment-profile-picture" width="20px"-->
 <!--                                    src="{% avatar user %}" alt="user" />-->
@@ -60,21 +56,20 @@
                                         </li>
                                         {% endif %}
                                     </ul>
-
                                 </li>
 
                             {% else %}
-                                <li class="nav-item col-1">
+                                <li class="nav-item col-md-0 col-lg-1 col-0">
 
                                 </li>
-                                <li class="nav-item col-2">
+                                <li class="nav-item col-md-2 col-12">
                                     <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#SignInModal">Log In</a>
                                 </li>
 
                             {% endif %}
                             </li>
                         </ul>
-                    </div>
+
 
 
                 </div>
@@ -92,7 +87,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div classmd-="col-6">
                                 <a role="button" class="btn btn-outline-dark col-12 my-2 btn-sm" href="{% url "social:begin" "google-oauth2" %}"><i
                                         class="fa-brands fa-google"></i>&nbsp&nbsp Google</a>
                             </div>

@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{% block head_title %}Blog{% endblock %}</title>
 
-        <link rel="stylesheet" href="{% static 'blog/reset.css' %}">
-        <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.min.css' %}"/>
+<!--        <link rel="stylesheet" href="{% static 'blog/css/reset.css' %}">-->
+        <link rel="stylesheet" href="{% static 'blog//bootstrap/bootstrap.min.css' %}"/>
         <link rel="stylesheet" href="{% static 'blog/css/blog-post.css' %}"/>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,12 +25,10 @@
         <div class="container my-3 base-main">
             <div class="row">
                 <div class="col-lg-9 col-md-8" id="main-area">
-                    <!-- 템플릿 모듈화 -->
                     {% block main_area %} {% endblock %}
                 </div>
-                <div class="col-lg-3 col-md-4" style="margin-top: 10rem">
+                <div class="col-lg-3 col-md-4 mt-4">
 
-                    <!-- Search widget-->
                     <div class="card mb-4">
                         <div class="card-header">Search</div>
                         <div class="card-body">
