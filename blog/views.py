@@ -66,8 +66,6 @@ def tag_page(request, slug):
     )
 
 
-
-
 class PostDetail(DetailView):
     model = Post
 
@@ -77,6 +75,7 @@ class PostDetail(DetailView):
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
         context['comment_form'] = CommentForm
         return context
+
 
 class PostCreate(LoginRequiredMixin, CreateView):
     model = Post

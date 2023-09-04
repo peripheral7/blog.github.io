@@ -134,17 +134,21 @@ USE_TZ = True
 
 
 STATIC_URL = "/static/"
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# 배포용
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 # DEBUG = True
 # 프로젝트 아래에 static 폴더가 있을 경우!
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+
+# 로컬개발용
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',
+# ]
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
