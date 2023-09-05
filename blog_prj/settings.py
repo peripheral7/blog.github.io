@@ -149,6 +149,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 #     BASE_DIR / 'static',
 # ]
 
+# 프로젝트 아래에 static 폴더가 있을 경우!
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -170,15 +172,3 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL='/blog/'
 LOGOUT_REDIRECT_URL = "/blog/"
 
-SOCIAL_AUTH_PIPELINE = (
-    'social.pipeline.social_auth.social_details',
-    'social.pipeline.social_auth.social_uid',
-    'social.pipeline.social_auth.auth_allowed',
-    'social.pipeline.social_auth.social_user',
-    'social.pipeline.user.get_username',
-    'social.pipeline.user.create_user',
-    'social.pipeline.social_auth.associate_user',
-    'social.pipeline.social_auth.load_extra_data',
-    'social.pipeline.user.user_details',
-    'blog.users.pipeline.save_profile',
-)

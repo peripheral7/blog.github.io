@@ -32,16 +32,24 @@
                                 <li class="nav-item col-lg-0 col-0">
                                 </li>
                                 <li class="nav-item col-lg-3 col-12 dropdown-center my-2 my-lg-auto">
-                                    <a href="#" class=" dropdown-toggle navbar-username"  role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="-10,0">
+                                    <a href="#" class=" dropdown-toggle navbar-username"  role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,10">
+                                    <img class="rounded-circle comment-profile-picture" width="20px" src="{% static 'blog/images/Gustav-Klimt.jpg' %}" alt="user" />
 
-<!--                                    {% avatar user 20 20 class="rounded-circle comment-profile-picture" id="user_avatar" %}-->
-                                     {% static 'blog/images/Gustav-klimt.jpg' %}
+<!--                                    {% if user.socialaccount_set.all.0.get_avatar_url %}-->
+<!--                                        <img class="rounded-circle comment-profile-picture" width="20px" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="user" />-->
+<!--                                    {% else %}-->
+<!--&lt;!&ndash;                                <img class="rounded-circle comment-profile-picture" width="20px"&ndash;&gt;-->
+<!--&lt;!&ndash;                                    src="{% avatar user %}" alt="user" />&ndash;&gt;-->
+<!--                                    &lt;!&ndash; {% static 'blog/images/Gustav-klimt.jpg' %} &ndash;&gt;-->
+<!--                                    {% endif %}-->
 
                                     {{user.username}}
                                     </a>
 
                                     <ul class="dropdown-menu" >
+
                                         <li><a href="/accounts/logout/" class="dropdown-item">Log Out</a></li>
+
                                     </ul>
                                 </li>
 
