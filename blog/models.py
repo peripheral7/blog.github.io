@@ -1,20 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth.models import AbstractUser
-
 from django.conf import settings
 from markdownx.utils import markdownify
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdown
 import os
-
-
-# class Profile(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     bio = models.TextField(max_length=500, blank=True)
-#     location = models.CharField(max_length=30, blank=True)
-#     birth_date = models.DateField(null=True, blank=True)
-#     imageUrl = models.TextField(null=True, blank=True)
 
 
 class Category(models.Model):
@@ -57,6 +47,7 @@ class Post(models.Model):
 
     # 태그 삭제시 포스트 태그는 자동 blank
     tags = models.ManyToManyField(Tag, blank=True)
+    
 
     def __str__(self):
         return f"[{self.pk}] {self.title} / {self.author}"
@@ -76,7 +67,10 @@ class Post(models.Model):
         return markdown(self.content)
 
     def get_avatar_url(self):
-        return static_url+'blog/images/Gustav-klimt.jpg'
+    #     if self.author.socialaccount_set.exists():
+    #         return self.author.socialaccount_set.first().get_avatar_url()
+    #     else:
+        return  static_url+'blog/images/Gustav-klimt.jpg'
 
 class About_post(models.Model):
     title = models.CharField(max_length=30)
@@ -99,5 +93,4 @@ class Comment(models.Model):
         return f'{self.post.get_absolute_url()}#comment-{self.pk}'
 
     def get_avatar_url(self):
-
-        return static_url+'blog/images/Gustav-klimt.jpg'
+        return  static_url+'blog/images/Gustav-klimt.jpg'

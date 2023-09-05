@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Post, Category, Tag, Comment
+
 from .forms import CommentForm
 from django.shortcuts import render, redirect
 # sign in
@@ -15,7 +16,6 @@ from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import auth
-
 
 # ListView 상속한 PostList 클래스 선언
 class PostList(ListView):
@@ -29,6 +29,9 @@ class PostList(ListView):
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
         return context
 
+#
+# def social_login(request):
+#     return render(request, 'social_login.html')
 
 def category_page(request, slug):
     if slug == 'no_category':
@@ -85,7 +88,7 @@ class PostCreate(LoginRequiredMixin, CreateView):
         # visitor
         current_user = self.request.user
         if current_user.is_authenticated:
-            form.instance.author = current_user.author
+            form.instance.author = current_user
             response = super(PostCreate, self).form_valid(form)
 
             tags_str = self.request.POST.get('tags_str')
@@ -155,6 +158,7 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
 def new_comment(request, pk):
     if request.user.is_authenticated:
         post = get_object_or_404(Post, pk=pk)
+
         if request.method == 'POST':
             comment_form = CommentForm(request.POST)
             if comment_form.is_valid():
