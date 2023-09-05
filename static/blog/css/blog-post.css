@@ -26,6 +26,7 @@ a:hover{
 
 }
 
+
 .nav-container{
     width: 100%;
 
@@ -34,7 +35,14 @@ a:hover{
 .post-content, .card, .korean{
     font-family: 'Noto Serif KR', serif;
     line-height: normal;
+}
+
+.post-content, .card{
     color: #313131;
+}
+
+.white-font {
+    color: #f5f0f0;
 }
 
 .navbar{

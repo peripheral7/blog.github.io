@@ -22,7 +22,6 @@ from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('avatar/', include('avatar.urls')),
     path('blog/', include('blog.urls')),
     path("admin/", admin.site.urls),
     path('markdownx/', include('markdownx.urls')),
