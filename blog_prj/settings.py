@@ -147,9 +147,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # 개발용
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# 프로젝트 아래에 static 폴더가 있을 경우!
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
