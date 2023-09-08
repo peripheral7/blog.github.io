@@ -145,11 +145,21 @@ a:hover{
 
 .about-background{
     padding: 0 0;
-    height:105vh;
     border-left: 1px solid white;
-    border-right: 1px solid white;
 }
 
+.about-video {
+
+}
+
+.border-collapse-parent{
+    display: table;
+}
+
+.border-collapse-child{
+    display : table-cell;
+    border-collapse: collapse
+}
 
 #post-detail-section{
     min-height: 37vh;
@@ -173,3 +183,4 @@ a:hover{
 .comment-field{
 height: 50px;
 }
+

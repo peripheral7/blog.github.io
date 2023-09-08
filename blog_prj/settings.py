@@ -44,8 +44,8 @@ DEBUG = True
 # else:
 #     ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = ['15.164.140.211']
-
+# ALLOWED_HOSTS = ['15.164.140.211']
+ALLOWED_HOSTS = []
 
 # Application definition
 
