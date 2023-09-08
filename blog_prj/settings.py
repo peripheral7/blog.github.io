@@ -19,6 +19,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # ROOT_DIR = os.path.dirname(BASE_DIR)
 
 
+STATIC_URL = "/static/"
+# 배포용
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# 개발용
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -132,23 +142,8 @@ LANGUAGE_CODE = "ko-KR"
 TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
-
 # changed
 USE_TZ = True
-
-
-STATIC_URL = "/static/"
-# 배포용
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-# DEBUG = True
-# 프로젝트 아래에 static 폴더가 있을 경우!
-
-# 개발용
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
