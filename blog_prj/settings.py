@@ -139,9 +139,10 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 # 배포용
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # DEBUG = True
+# 프로젝트 아래에 static 폴더가 있을 경우!
 
 # 개발용
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
