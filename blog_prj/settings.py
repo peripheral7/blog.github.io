@@ -26,15 +26,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', "django-insecure-ysv4zwz65^)g7vb17tnwyhfmaazhz_l83h+j4!cd4b+)^6_ov#")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = int(os.environ.get('DEBUG', 1))
+DEBUG = True
+# DEBUG = int(os.environ.get('DEBUG', 1))
 
-if os.environ.get('DJANGO_ALLOWED_HOSTS'):
-    ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ')
-else:
-    ALLOWED_HOSTS = []
+# if os.environ.get('DJANGO_ALLOWED_HOSTS'):
+#     ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ')
+# else:
+#     ALLOWED_HOSTS = []
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['15.164.140.211']
 
 
 # Application definition
