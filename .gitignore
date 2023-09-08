@@ -136,3 +136,4 @@ _media/
 
 .env.prod
 .env.prod.db
+mysite.pem
