@@ -221,5 +221,9 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
+        'logger_1': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        },
     }
 }
