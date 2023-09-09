@@ -1,7 +1,7 @@
 # from django.shortcuts import render
 from urllib import response
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Post, Category, Tag, Comment
 
