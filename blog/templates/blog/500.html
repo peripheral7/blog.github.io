@@ -1,11 +1,29 @@
+<html lang="en">
+    {% load static %}
 
-<!-- 500 Page -->
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 text-center">
-            <span class="display-1 d-block">500</span>
-            <div class="mb-4 lead">서버 오류가 발생했습니다.</div>
-            <a href="/" class="btn btn-link">홈으로 돌아가기</a>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>{% block head_title %}Blog{% endblock %}</title>
+
+        <link rel="stylesheet" href="{% static 'blog//bootstrap/bootstrap.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'blog/css/blog-post.css' %}"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    </head>
+    <!-- 500 Page -->
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center">
+                <span class="display-1 d-block">500</span>
+                <h1 class="mb-4 lead">서버 오류가 발생했습니다.</h1>
+                <a href="/" class="btn btn-link">홈으로 돌아가기</a>
+            </div>
         </div>
     </div>
-</div>
+
+</html>
