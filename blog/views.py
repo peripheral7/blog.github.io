@@ -18,6 +18,9 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 
 
+def index(request):
+    3/0
+
 def page_not_found(request, exception):
     return render(request, 'blog/404.html', {})
 
