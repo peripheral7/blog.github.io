@@ -201,7 +201,7 @@ LOGGING = {
         "file": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": BASE_DIR / "logs/mysite.log",
+            "filename": "logs/mysite.log",
             "backupCount": 5,
             "formatter": "verbose",
         },

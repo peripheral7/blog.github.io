@@ -17,13 +17,6 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import auth
 
-import logging
-logger = logging.getLogger('logger_1')
-
-
-def index(request):
-    logger.info("INFO 레벨 출력")
-
 
 def page_not_found(request, exception):
     return render(request, 'blog/404.html', {})
