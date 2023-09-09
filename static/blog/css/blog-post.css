@@ -72,6 +72,7 @@ a:hover{
 .navbar-username{
     text-decoration: none;
     color: #b3afab;
+    font-size: 1rem;
 }
 
 .navbar-username:hover{
@@ -79,6 +80,7 @@ a:hover{
 }
 
 .landing-header {
+    margin-top: 72px;
     color: #313131;
     padding: 30vh 0 60vh;
     background: url('/static/blog/images/paper_sky.jpg') no-repeat center center fixed;
@@ -172,8 +174,8 @@ a:hover{
 }
 
 .comment-profile-picture{
-    width: 50px;
-    height: 50px;
+    width: 2rem;
+    height: 2rem;
 }
 
 .delete-button:hover{
