@@ -201,7 +201,7 @@ LOGGING = {
         "file": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": "logs/mysite.log",
+            "filename": os.path.join(BASE_DIR, "logs/mysite.log"),
             "backupCount": 5,
             "formatter": "verbose",
         },
