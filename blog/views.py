@@ -22,6 +22,10 @@ def page_not_found(request, exception):
     return render(request, 'blog/404.html', {})
 
 
+def server_error(request, exception):
+    return render(request, 'blog/500.html', {})
+
+
 # ListView 상속한 PostList 클래스 선언
 class PostList(ListView):
     model = Post
