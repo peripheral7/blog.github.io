@@ -5,6 +5,13 @@ body{
     color: #313131;
 }
 
+.item-center-parent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
  .base-main {
     min-height: 90vh;
 }
