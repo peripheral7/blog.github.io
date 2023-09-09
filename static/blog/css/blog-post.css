@@ -80,7 +80,6 @@ a:hover{
 }
 
 .landing-header {
-    margin-top: 72px;
     color: #313131;
     padding: 30vh 0 60vh;
     background: url('/static/blog/images/paper_sky.jpg') no-repeat center center fixed;
