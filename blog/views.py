@@ -17,6 +17,11 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import auth
 
+
+def page_not_found(request, exception):
+    return render(request, 'common/404.html', {})
+
+
 # ListView 상속한 PostList 클래스 선언
 class PostList(ListView):
     model = Post
