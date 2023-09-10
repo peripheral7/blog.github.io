@@ -18,7 +18,6 @@ from django.urls import path, include
 
 from django.conf import settings
 from django.conf.urls import url
-from django.views.static import serve
 from django.conf.urls.static import static
 
 from django.contrib.auth.views import LogoutView
@@ -33,11 +32,8 @@ urlpatterns = [
     path('accounts/logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
 ]
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-urlpatterns += url(r'^media/(?P<path>.\*)$', serve, {
-    'document_root': settings.MEDIA_ROOT,
-})
 
 handler404 = 'blog.views.page_not_found'
 handler500 = 'blog.views.server_error'
