@@ -33,6 +33,10 @@ urlpatterns = [
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += [
+    url(r'^media/(?P<path>.*)$', django.views.static.serve, {
+    'document_root': settings.MEDIA_ROOT}),]
+
 
 handler404 = 'blog.views.page_not_found'
 handler500 = 'blog.views.server_error'
