@@ -20,8 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 STATIC_URL = "/static/"
-
-# 개발용
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # 배포용

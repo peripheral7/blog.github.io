@@ -70,7 +70,7 @@ class Post(models.Model):
     #     if self.author.socialaccount_set.exists():
     #         return self.author.socialaccount_set.first().get_avatar_url()
     #     else:
-        return  static_url+'blog/images/Gustav-klimt.jpg'
+        return static_url+'blog/images/Gustav-Klimt.jpg'
 
 class About_post(models.Model):
     title = models.CharField(max_length=30)
@@ -93,4 +93,5 @@ class Comment(models.Model):
         return f'{self.post.get_absolute_url()}#comment-{self.pk}'
 
     def get_avatar_url(self):
-        return  static_url+'blog/images/Gustav-klimt.jpg'
+        return static_url+'blog/images/Gustav-Klimt.jpg'
+
