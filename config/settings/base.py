@@ -152,9 +152,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "348055127156-vulur0tsr94dh05do7bq95mac38b9jme.apps.googleusercontent.com"
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
-
 # PostgreSQL use JSONB field to store extra_data
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
