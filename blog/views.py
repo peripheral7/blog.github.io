@@ -229,32 +229,3 @@ class PostSearch(PostList):
         context['search_info'] = f'Search: {q} ({self.get_queryset().count()})'
 
         return context
-
-
-
-
-"""Function Based View
-def index(request):
-    # send query to database, bring record as dictionary
-    posts = Post.objects.all().order_by('-pk')
-
-    return render(
-        request,
-        'blog/index.html',
-        {
-            'posts': posts,
-        }
-    )
-
-def single_post_page(request, pk):
-    # get - 괄호 안의 조건을 만족하는 post 레코드 가져오라
-    post = Post.objects.get(pk=pk)
-
-    return render(
-        request, 
-        'blog/single_post_page.html',
-        {
-            'post': post,
-        }
-    )
-"""

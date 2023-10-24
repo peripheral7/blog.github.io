@@ -18,5 +18,4 @@ class TagAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Post, MarkdownxModelAdmin)
-
 admin.site.register(Comment)
