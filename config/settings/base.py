@@ -19,11 +19,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # ROOT_DIR = os.path.dirname(BASE_DIR)
 
 
-STATIC_URL = "/static/"
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# 배포용
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -44,7 +42,6 @@ DEBUG = False
 # else:
 #     ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = ['3.35.38.90']
 #
 # Application definition
 
