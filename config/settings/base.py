@@ -19,9 +19,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # ROOT_DIR = os.path.dirname(BASE_DIR)
 
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
+# 배포용
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -34,7 +36,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = os.environ.get('SECRET_KEY', "django-insecure-ysv4zwz65^)g7vb17tnwyhfmaazhz_l83h+j4!cd4b+)^6_ov#")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 # DEBUG = int(os.environ.get('DEBUG', 1))
 
 # if os.environ.get('DJANGO_ALLOWED_HOSTS'):
@@ -42,6 +44,7 @@ DEBUG = False
 # else:
 #     ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = []
 #
 # Application definition
 

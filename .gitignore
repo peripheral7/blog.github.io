@@ -138,4 +138,3 @@ _media/
 .env.prod.db
 mysite.pem
 logs
-django-key.pem
