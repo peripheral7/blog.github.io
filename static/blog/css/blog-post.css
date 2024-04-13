@@ -36,7 +36,6 @@ a:hover{
 
 .nav-container{
     width: 100%;
-
 }
 
 .post-content, .card, .korean{
@@ -82,29 +81,13 @@ a:hover{
 .landing-header {
     color: #313131;
     padding: 30vh 0 60vh;
-    background: url('/static/blog/images/paper_sky.jpg') no-repeat center center fixed;
+    background: url('/static/blog/images/khu_lib.JPG') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover
     -o-background-size: cover;
 }
 
-.landing-h1-black{
-    transition: all 0.5s ease;
-}
-
-.landing-h1-black:hover{
-    -webkit-animation: glow 1s ease-in-out infinite alternate;
-    -moz-animation: glow 1s ease-in-out infinite alternate;
-    animation: glow 1s ease-in-out infinite alternate;
-    text-shadow: 0 0 3px #F5F0F6, 0 0 6px #F5F0F6;
-}
-
-.landing-h1-white{
-    color: white;
-    margin: 0 0;
-    padding: 20vh 0;
-}
 
 .landing-video {
     padding: 30vh 0 30vh;
@@ -117,12 +100,10 @@ a:hover{
 
 .landing-bottom{
     padding: 40vh 0;
-    background-image: url('../images/385F71.png');
     background-size: cover;
+    background-color: #2B4162;
 }
-.landing-bottom-background{
-    object-fit: cover;
-}
+
 
 #list-image-div{
     width: 100%;
@@ -155,9 +136,6 @@ a:hover{
     border-left: 1px solid white;
 }
 
-.about-video {
-
-}
 
 .border-collapse-parent{
     display: table;
